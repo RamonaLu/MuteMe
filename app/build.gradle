@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'AndroidKey'
             keyPassword 'abc123'
-            storeFile file('C:/Users/Jye/AndroidStudioProjects/MuteMe/android.jks')
+            storeFile file('android.jks')
             storePassword 'abc123'
         }
     }
