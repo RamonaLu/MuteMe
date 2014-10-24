@@ -1,72 +1,60 @@
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/t3"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AllowAlarm"
+        android:text="Allow alarm"
         android:id="@+id/allowAlarmSwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white" />
+        android:layout_gravity="right" />
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Allow Call"
-        android:id="@+id/allowCallSwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white"
-        android:onClick="goCall" />
+        android:text="Allow calls"
+        android:id="@+id/allowCallsSwitch"
+        android:layout_gravity="right" />
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Allow SMS"
         android:id="@+id/allowSmsSwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white" />
+        android:layout_gravity="right" />
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Auto-respond to ignore calls"
+        android:text="Auto-respond to ignored calls"
         android:id="@+id/autoRespondSwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white" />
+        android:layout_gravity="right" />
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notify On Mute"
-        android:id="@+id/notifyMuteSwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white" />
+        android:text="Notify on mute"
+        android:id="@+id/switch1"
+        android:checked="false"
+        android:layout_gravity="right" />
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mute cinemas"
-        android:id="@+id/muteCinemasSwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white" />
+        android:id="@+id/switch2"
+        android:checked="false"
+        android:layout_gravity="right" />
 
     <Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Mute library"
-        android:id="@+id/muteLibrarySwitch"
-        android:layout_gravity="right"
-        android:layout_weight="1"
-        android:textColor="@drawable/white" />
+        android:text="Mute libraries"
+        android:id="@+id/switch3"
+        android:checked="false"
+        android:layout_gravity="right" />
 
 </LinearLayout>
