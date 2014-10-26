@@ -179,7 +179,7 @@ public class MuteDetailFragment extends Fragment implements MuteMapFragment.OnMa
                 public void onMapClick(LatLng latLng) {
 
                     latitudeEdit.setText(latLng.latitude + "");
-                    longitudeEdit.setText(latLng.latitude + "");
+                    longitudeEdit.setText(latLng.longitude + "");
                 }
             });
         }
