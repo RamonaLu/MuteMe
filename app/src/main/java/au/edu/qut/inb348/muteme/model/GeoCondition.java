@@ -5,7 +5,7 @@ import android.os.SystemClock;
 
 public class GeoCondition {
 
-    public static final GeoCondition EVERYWHERE = new GeoCondition(-1, -1, -1);
+    public static final GeoCondition EVERYWHERE = new GeoCondition(-1, -1, 100);
 
 	public double longitude;
     public double latitude;

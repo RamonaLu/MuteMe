@@ -1,6 +1,7 @@
 package au.edu.qut.inb348.muteme;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,12 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
 
@@ -23,7 +30,7 @@ import au.edu.qut.inb348.muteme.model.Mute;
  * in two-pane mode (on tablets) or a {@link MuteDetailActivity}
  * on handsets.
  */
-public class MuteDetailFragment extends Fragment {
+public class MuteDetailFragment extends Fragment implements MuteMapFragment.OnMapReadyListener{
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -71,6 +78,8 @@ public class MuteDetailFragment extends Fragment {
     TimePicker startPicker;
     TimePicker stopPicker;
     View rootView;
+    LocationHelper locationHelper;
+    MuteMapFragment mapFragment;
 
     private void syncFromMute(Mute item) {
 
@@ -90,6 +99,7 @@ public class MuteDetailFragment extends Fragment {
             toggle.setChecked(item.chronoCondition.daysOfWeek.contains(dayOfWeek));
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -103,6 +113,12 @@ public class MuteDetailFragment extends Fragment {
         radiusEdit = (EditText)rootView.findViewById(R.id.radiusEdit);
         startPicker.setIs24HourView(true);
         stopPicker.setIs24HourView(true);
+        mapFragment =  new MuteMapFragment();
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.mute_map_container, mapFragment)
+                .commit();
+        locationHelper = new LocationHelper(getActivity());
 
         if (item != null) {
             syncFromMute(item);
@@ -128,6 +144,7 @@ public class MuteDetailFragment extends Fragment {
         item.chronoCondition.timeSpan.stop.minutes = stopPicker.getCurrentMinute();
         item.geoCondition.latitude = Double.parseDouble(latitudeEdit.getText().toString());
         item.geoCondition.longitude = Double.parseDouble(longitudeEdit.getText().toString());
+        item.geoCondition.radiusMetres = Integer.parseInt(radiusEdit.getText().toString());
         for(final DayOfWeek dayOfWeek : toggleDayMap.keySet()){
             ToggleButton toggle = (ToggleButton)rootView.findViewById(toggleDayMap.get(dayOfWeek));
             if (toggle.isChecked()) {
@@ -143,4 +160,29 @@ public class MuteDetailFragment extends Fragment {
         dbHelper = new MutesDbHelper(getActivity());
         super.onAttach(activity);
     }
+
+    @Override
+    public void onMapReady() {
+        final GoogleMap muteMap = mapFragment.getMap();
+
+
+        if (muteMap != null) {
+            muteMap.setPadding(5,5,5,5);
+            Location currentLocation = locationHelper.getMostRecentLastKnownLocation();
+            CameraUpdate cameraAtCurrentLocation =
+                    CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()));
+            CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
+            muteMap.moveCamera(cameraAtCurrentLocation);
+            muteMap.animateCamera(zoom);
+            muteMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                @Override
+                public void onMapClick(LatLng latLng) {
+
+                    latitudeEdit.setText(latLng.latitude + "");
+                    longitudeEdit.setText(latLng.latitude + "");
+                }
+            });
+        }
+    }
+
 }

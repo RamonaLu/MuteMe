@@ -6,5 +6,6 @@
     <string name="action_create">Create</string>
     <string name="action_delete">Delete</string>
     <string name="action_get">Edit</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

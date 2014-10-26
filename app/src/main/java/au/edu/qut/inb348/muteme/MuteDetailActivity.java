@@ -1,12 +1,12 @@
 package au.edu.qut.inb348.muteme;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.MapFragment;
 
 
 /**
@@ -26,7 +26,10 @@ public class MuteDetailActivity extends Activity {
         setContentView(R.layout.activity_mute_detail);
 
         // Show the Up button in the action bar.
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         // savedInstanceState is non-null when there is fragment state
         // saved from previous configurations of this activity
@@ -44,10 +47,9 @@ public class MuteDetailActivity extends Activity {
             arguments.putLong(MuteDetailFragment.ARG_ITEM_ID,
                     getIntent().getLongExtra(MuteDetailFragment.ARG_ITEM_ID, -1));
             MuteDetailFragment fragment = new MuteDetailFragment();
-            MapFragment locationFragment = new MapFragment();
             fragment.setArguments(arguments);
             getFragmentManager().beginTransaction()
-                    .add(R.id.mute_detail_container, fragment)
+                    .replace(R.id.mute_detail_container, fragment)
                     .commit();
         }
     }
