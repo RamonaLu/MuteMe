@@ -80,17 +80,21 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
         if (muteMap != null) {
             muteMap.setPadding(5,5,5,5);
             Location currentLocation = locationHelper.getMostRecentLastKnownLocation();
-            CameraUpdate cameraAtCurrentLocation =
-                    CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-            CameraUpdate zoom=CameraUpdateFactory.zoomTo(15);
-            muteMap.moveCamera(cameraAtCurrentLocation);
-            muteMap.animateCamera(zoom);
+            if (currentLocation != null) {
+                CameraUpdate cameraAtCurrentLocation =
+                CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+
+                muteMap.moveCamera(cameraAtCurrentLocation);
+                CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
+                muteMap.animateCamera(zoom);
+            }
             muteMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
-
+                if (latLng != null) {
                     latitudeEdit.setText(latLng.latitude + "");
                     longitudeEdit.setText(latLng.longitude + "");
+                }
                 }
             });
         }
