@@ -14,8 +14,7 @@ import android.view.MenuItem;
 
 
 
-public class MuteDetailActivity extends FragmentActivity implements
-        ActionBar.TabListener {
+public class MuteDetailActivity extends FragmentActivity  {
     /**
      * The fragment argument representing the item ID that this fragment
      * represents.
@@ -55,6 +54,7 @@ public class MuteDetailActivity extends FragmentActivity implements
         }
 
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +79,7 @@ public class MuteDetailActivity extends FragmentActivity implements
                 }
 
                 public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-                    // hide the given tab
+
                 }
 
                 public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -101,27 +101,6 @@ public class MuteDetailActivity extends FragmentActivity implements
 
         }
 
-        // savedInstanceState is non-null when there is fragment state
-        // saved from previous configurations of this activity
-        // (e.g. when rotating the screen from portrait to landscape).
-        // In this case, the fragment will automatically be re-added
-        // to its container so we don't need to manually add it.
-        // For more information, see the Fragments API guide at:
-        //
-        // http://developer.android.com/guide/components/fragments.html
-        //
-//        if (savedInstanceState == null) {
-//            // Create the detail fragment and add it to the activity
-//            // using a fragment transaction.
-//            Bundle arguments = new Bundle();
-//            arguments.putLong(MuteDetailFragment.ARG_ITEM_ID,
-//                    getIntent().getLongExtra(MuteDetailFragment.ARG_ITEM_ID, -1));
-//            MuteDetailFragment fragment = new MuteDetailFragment();
-//            fragment.setArguments(arguments);
-//            getFragmentManager().beginTransaction()
-//                    .replace(R.id.mute_detail_container, fragment)
-//                    .commit();
-//        }
     }
 
     @Override
@@ -141,18 +120,4 @@ public class MuteDetailActivity extends FragmentActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
-
-    @Override
-    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-
-    }
 }

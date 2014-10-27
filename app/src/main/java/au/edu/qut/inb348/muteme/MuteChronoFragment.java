@@ -25,7 +25,6 @@ public class MuteChronoFragment extends Fragment {
 
     private Mute item;
     private MutesDbHelper dbHelper;
-    EditText titleEdit;
     TimePicker startPicker;
     TimePicker stopPicker;
     View rootView;
@@ -56,7 +55,6 @@ public class MuteChronoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_mute_chrono, container, false);
-        titleEdit = (EditText)rootView.findViewById(R.id.titleEdit);
         startPicker = (TimePicker)rootView.findViewById(R.id.startPicker);
         stopPicker = (TimePicker)rootView.findViewById(R.id.stopPicker);
         startPicker.setIs24HourView(true);
@@ -71,11 +69,7 @@ public class MuteChronoFragment extends Fragment {
 
     @Override
     public void onPause() {
-        muteRegistrar.deregister(item);
-        syncToMute(item);
-        muteRegistrar.register(item);
-        dbHelper.updateMute(item);
-
+        saveMute();
         super.onPause();
     }
     @Override
@@ -83,9 +77,14 @@ public class MuteChronoFragment extends Fragment {
         dbHelper = new MutesDbHelper(getActivity());
         super.onAttach(activity);
     }
+    private void saveMute() {
+        muteRegistrar.deregister(item);
+        syncToMute(item);
+        muteRegistrar.register(item);
+        dbHelper.updateMute(item);
+    }
 
     private void syncToMute(Mute item) {
-        item.title = titleEdit.getText().toString();
         item.chronoCondition.timeSpan.start.hour = startPicker.getCurrentHour();
         item.chronoCondition.timeSpan.start.minutes = startPicker.getCurrentMinute();
         item.chronoCondition.timeSpan.stop.hour = stopPicker.getCurrentHour();
@@ -100,7 +99,6 @@ public class MuteChronoFragment extends Fragment {
         }
     }
     private void syncFromMute(Mute item) {
-        titleEdit.setText(item.title);
         startPicker.setCurrentHour(item.chronoCondition.timeSpan.start.hour);
         startPicker.setCurrentMinute(item.chronoCondition.timeSpan.start.minutes);
         stopPicker.setCurrentHour(item.chronoCondition.timeSpan.stop.hour);

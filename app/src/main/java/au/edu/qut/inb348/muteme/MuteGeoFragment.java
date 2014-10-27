@@ -98,11 +98,15 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
 
     @Override
     public void onPause() {
+        saveMute();
+        super.onPause();
+    }
+
+    private void saveMute() {
         muteRegistrar.deregister(item);
         syncToMute(item);
         muteRegistrar.register(item);
         dbHelper.updateMute(item);
-        super.onPause();
     }
 
     private void syncFromMute(Mute item) {

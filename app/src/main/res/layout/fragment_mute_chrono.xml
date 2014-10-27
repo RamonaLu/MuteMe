@@ -4,18 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Title"
-        android:id="@+id/titleLabel" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/titleEdit"
-        android:inputType="text"
-        android:maxLines="1" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
