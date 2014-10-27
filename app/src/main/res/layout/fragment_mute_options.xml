@@ -5,7 +5,7 @@
     android:background="@drawable/t3"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Switch
+    Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="AllowAlarm"
@@ -14,7 +14,7 @@
         android:layout_weight="1"
         android:textColor="@drawable/white" />
 
-    <Switch
+    Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Allow Call"
@@ -24,7 +24,7 @@
         android:textColor="@drawable/white"
         android:onClick="goCall" />
 
-    <Switch
+    Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Allow SMS"
@@ -33,7 +33,7 @@
         android:layout_weight="1"
         android:textColor="@drawable/white" />
 
-    <Switch
+    Switch
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Auto-respond to ignore calls"

@@ -1,34 +1,104 @@
 package au.edu.qut.inb348.muteme;
 
 import android.app.ActionBar;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
 
 
-/**
- * An activity representing a single Mute detail screen. This
- * activity is only used on handset devices. On tablet-size devices,
- * item details are presented side-by-side with a list of items
- * in a {@link MuteListActivity}.
- * <p>
- * This activity is mostly just a 'shell' activity containing nothing
- * more than a {@link MuteDetailFragment}.
- */
-public class MuteDetailActivity extends Activity {
+public class MuteDetailActivity extends FragmentActivity implements
+        ActionBar.TabListener {
+    /**
+     * The fragment argument representing the item ID that this fragment
+     * represents.
+     */
+    public static final String ARG_ITEM_ID = "item_id";
+    TabsPagerAdapter tabsPagerAdapter;
+    ViewPager viewPager;
 
+    public class TabsPagerAdapter extends FragmentStatePagerAdapter {
+        public TabsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+
+            Bundle arguments = new Bundle();
+            arguments.putLong(MuteDetailActivity.ARG_ITEM_ID,
+                    getIntent().getLongExtra(MuteDetailActivity.ARG_ITEM_ID, -1));
+            switch(i){
+                case 0:
+                    MuteChronoFragment chronoFragment = new MuteChronoFragment();
+                    chronoFragment.setArguments(arguments);
+                    return chronoFragment;
+                case 1:
+                    MuteGeoFragment geoFragment = new MuteGeoFragment();
+                    geoFragment.setArguments(arguments);
+                    return geoFragment;
+                default:
+                    throw new IllegalArgumentException();
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mute_detail);
-
+        tabsPagerAdapter  =
+                new TabsPagerAdapter(
+                        getSupportFragmentManager());
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(tabsPagerAdapter);
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+
+            // Specify that tabs should be displayed in the action bar.
+            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+            // Create a tab listener that is called when the user changes tabs.
+            ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+                public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
+
+                public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                    // hide the given tab
+                }
+
+                public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                    // probably ignore this event
+                }
+
+            };
+            viewPager.setOnPageChangeListener(
+                    new ViewPager.SimpleOnPageChangeListener() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            // When swiping between pages, select the
+                            // corresponding tab.
+                            getActionBar().setSelectedNavigationItem(position);
+                        }
+                    });
+            actionBar.addTab(actionBar.newTab().setText("Time").setTabListener(tabListener));
+            actionBar.addTab(actionBar.newTab().setText("Location").setTabListener(tabListener));
+
         }
 
         // savedInstanceState is non-null when there is fragment state
@@ -40,18 +110,18 @@ public class MuteDetailActivity extends Activity {
         //
         // http://developer.android.com/guide/components/fragments.html
         //
-        if (savedInstanceState == null) {
-            // Create the detail fragment and add it to the activity
-            // using a fragment transaction.
-            Bundle arguments = new Bundle();
-            arguments.putLong(MuteDetailFragment.ARG_ITEM_ID,
-                    getIntent().getLongExtra(MuteDetailFragment.ARG_ITEM_ID, -1));
-            MuteDetailFragment fragment = new MuteDetailFragment();
-            fragment.setArguments(arguments);
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.mute_detail_container, fragment)
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//            // Create the detail fragment and add it to the activity
+//            // using a fragment transaction.
+//            Bundle arguments = new Bundle();
+//            arguments.putLong(MuteDetailFragment.ARG_ITEM_ID,
+//                    getIntent().getLongExtra(MuteDetailFragment.ARG_ITEM_ID, -1));
+//            MuteDetailFragment fragment = new MuteDetailFragment();
+//            fragment.setArguments(arguments);
+//            getFragmentManager().beginTransaction()
+//                    .replace(R.id.mute_detail_container, fragment)
+//                    .commit();
+//        }
     }
 
     @Override
@@ -69,5 +139,20 @@ public class MuteDetailActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 }
