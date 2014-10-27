@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_width="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_height="wrap_content"
         android:text="Title"
         android:id="@+id/titleLabel" />
@@ -18,6 +19,7 @@
         android:maxLines="1" />
     <TextView
         android:layout_width="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_height="wrap_content"
         android:text="Latitude"
         android:id="@+id/latidudeLabel" />
@@ -31,6 +33,7 @@
 
     <TextView
         android:layout_width="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_height="wrap_content"
         android:text="Longitude"
         android:id="@+id/longitudeLabel" />
@@ -44,6 +47,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Radius (metres)"
         android:id="@+id/radiusLabel" />
 
