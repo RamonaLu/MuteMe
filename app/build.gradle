@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'AndroidKey'
             keyPassword 'MuteMe'
-            storeFile file('C:/Users/Owner/Source/AndroidStudioProjects/MuteMe/muteme.keystore')
+            storeFile file('..\\muteme.keystore')
             storePassword 'MuteMe'
         }
     }
