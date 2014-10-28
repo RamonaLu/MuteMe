@@ -15,8 +15,11 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import au.edu.qut.inb348.muteme.data.MutesDbHelper;
+import au.edu.qut.inb348.muteme.model.GeoCondition;
 import au.edu.qut.inb348.muteme.model.Mute;
 
 
@@ -58,33 +61,54 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
         return rootView;
     }
 
-
+     GoogleMap muteMap;
     @Override
     public void onMapReady() {
-        final GoogleMap muteMap = mapFragment.getMap();
+        muteMap = mapFragment.getMap();
 
 
         if (muteMap != null) {
             muteMap.setPadding(5,5,5,5);
-            Location currentLocation = locationHelper.getMostRecentLastKnownLocation();
-            if (currentLocation != null) {
+
+            LatLng mapLocation = null;
+            if (mute.geoCondition == GeoCondition.EVERYWHERE){
+                Location mostRecentLastKnownLocation = locationHelper.getMostRecentLastKnownLocation();
+                if (mostRecentLastKnownLocation != null) {
+                    mapLocation = new LatLng(mostRecentLastKnownLocation.getLatitude(), mostRecentLastKnownLocation.getLongitude());
+                }
+            }
+            else {
+                mapLocation = new LatLng(mute.geoCondition.latitude, mute.geoCondition.longitude);
+            }
+
+            if (mapLocation != null) {
+                changeLocationTo(mapLocation);
                 CameraUpdate cameraAtCurrentLocation =
-                CameraUpdateFactory.newLatLng(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
+                        CameraUpdateFactory.newLatLng(mapLocation);
 
                 muteMap.moveCamera(cameraAtCurrentLocation);
                 CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
                 muteMap.animateCamera(zoom);
+                muteMap.setOnMapClickListener( new GoogleMap.OnMapClickListener(){
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        changeLocationTo(latLng);
+                    }
+                });
+
             }
-            muteMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                @Override
-                public void onMapClick(LatLng latLng) {
-                if (latLng != null) {
-                    latitudeEdit.setText(latLng.latitude + "");
-                    longitudeEdit.setText(latLng.longitude + "");
-                }
-                }
-            });
         }
+    }
+    Marker locationMarker;
+
+    private void changeLocationTo(LatLng latLng) {
+        if (locationMarker != null) {
+            locationMarker.remove();
+        }
+        locationMarker = muteMap.addMarker(new MarkerOptions()
+                .position(latLng));
+        latitudeEdit.setText(latLng.latitude + "");
+        longitudeEdit.setText(latLng.longitude + "");
     }
 
     public void syncFromMute(Mute item) {
