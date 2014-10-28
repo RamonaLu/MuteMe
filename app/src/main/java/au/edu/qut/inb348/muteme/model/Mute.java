@@ -13,7 +13,7 @@ public class Mute {
 	}
 
     public Mute() {
-        this(-1, GeoCondition.EVERYWHERE, ChronoCondition.ALWAYS, "Everywhere and always");
+        this(-1, GeoCondition.EVERYWHERE, ChronoCondition.ALWAYS, "Everywhere");
     }
 
 

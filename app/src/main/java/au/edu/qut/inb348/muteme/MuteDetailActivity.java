@@ -12,6 +12,8 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
+import au.edu.qut.inb348.muteme.data.MutesDbHelper;
+import au.edu.qut.inb348.muteme.model.Mute;
 
 
 public class MuteDetailActivity extends FragmentActivity  {
@@ -22,6 +24,13 @@ public class MuteDetailActivity extends FragmentActivity  {
     public static final String ARG_ITEM_ID = "item_id";
     TabsPagerAdapter tabsPagerAdapter;
     ViewPager viewPager;
+    MuteChronoFragment chronoFragment;
+    MuteGeoFragment geoFragment;
+    private MuteRegistrar muteRegistrar;
+
+
+    private Mute item;
+    private MutesDbHelper dbHelper;
 
     public class TabsPagerAdapter extends FragmentStatePagerAdapter {
         public TabsPagerAdapter(FragmentManager fm) {
@@ -31,17 +40,14 @@ public class MuteDetailActivity extends FragmentActivity  {
         @Override
         public Fragment getItem(int i) {
 
-            Bundle arguments = new Bundle();
-            arguments.putLong(MuteDetailActivity.ARG_ITEM_ID,
-                    getIntent().getLongExtra(MuteDetailActivity.ARG_ITEM_ID, -1));
             switch(i){
                 case 0:
-                    MuteChronoFragment chronoFragment = new MuteChronoFragment();
-                    chronoFragment.setArguments(arguments);
+                    chronoFragment = new MuteChronoFragment();
+                    chronoFragment.mute = item;
                     return chronoFragment;
                 case 1:
-                    MuteGeoFragment geoFragment = new MuteGeoFragment();
-                    geoFragment.setArguments(arguments);
+                    geoFragment = new MuteGeoFragment();
+                    geoFragment.mute = item;
                     return geoFragment;
                 default:
                     throw new IllegalArgumentException();
@@ -56,6 +62,24 @@ public class MuteDetailActivity extends FragmentActivity  {
     }
 
     @Override
+    protected void onPause() {
+        saveMute();
+        super.onPause();
+    }
+
+    private void saveMute() {
+        muteRegistrar.deregister(item);
+        if (chronoFragment != null) {
+            chronoFragment.syncToMute (item);
+        }
+        if (geoFragment != null) {
+            geoFragment.syncToMute (item);
+        }
+        muteRegistrar.register(item);
+        dbHelper.updateMute(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mute_detail);
@@ -64,6 +88,9 @@ public class MuteDetailActivity extends FragmentActivity  {
                         getSupportFragmentManager());
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(tabsPagerAdapter);
+        dbHelper = new MutesDbHelper(this);
+        muteRegistrar = new MuteRegistrar(this);
+        item = dbHelper.getMute(getIntent().getLongExtra(MuteDetailActivity.ARG_ITEM_ID, -1));
         // Show the Up button in the action bar.
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -76,14 +103,29 @@ public class MuteDetailActivity extends FragmentActivity  {
             ActionBar.TabListener tabListener = new ActionBar.TabListener() {
                 public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
                     viewPager.setCurrentItem(tab.getPosition());
+                    switch(tab.getPosition()){
+                        case 0:
+                            if (item != null && chronoFragment != null) {
+                                chronoFragment.syncFromMute(item);
+                            }
+                            break;
+                        case 1:
+                            if (item != null && geoFragment != null) {
+                                geoFragment.syncFromMute(item);
+                            }
+                            break;
+                        default:
+                            throw new IllegalArgumentException();
+                    }
+
                 }
 
                 public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
+                    saveMute();
                 }
 
                 public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-                    // probably ignore this event
+
                 }
 
             };

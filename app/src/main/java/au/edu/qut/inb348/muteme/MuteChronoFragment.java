@@ -21,10 +21,7 @@ import au.edu.qut.inb348.muteme.model.Mute;
 public class MuteChronoFragment extends Fragment {
 
     private HashMap<DayOfWeek, Integer> toggleDayMap;
-    private MuteRegistrar muteRegistrar;
-
-    private Mute item;
-    private MutesDbHelper dbHelper;
+    Mute mute;
     TimePicker startPicker;
     TimePicker stopPicker;
     View rootView;
@@ -44,11 +41,7 @@ public class MuteChronoFragment extends Fragment {
         toggleDayMap.put(DayOfWeek.FRIDAY, R.id.fridayToggle);
         toggleDayMap.put(DayOfWeek.SATURDAY, R.id.saturdayToggle);
         toggleDayMap.put(DayOfWeek.SUNDAY, R.id.sundayToggle);
-        muteRegistrar = new MuteRegistrar(getActivity());
 
-        if (getArguments().containsKey(MuteDetailActivity.ARG_ITEM_ID)) {
-            item = dbHelper.getMute(getArguments().getLong(MuteDetailActivity.ARG_ITEM_ID));
-        }
     }
 
     @Override
@@ -59,32 +52,13 @@ public class MuteChronoFragment extends Fragment {
         stopPicker = (TimePicker)rootView.findViewById(R.id.stopPicker);
         startPicker.setIs24HourView(true);
         stopPicker.setIs24HourView(true);
-
-
-        if (item != null) {
-            syncFromMute(item);
+        if (mute != null) {
+            syncFromMute(mute);
         }
         return rootView;
     }
 
-    @Override
-    public void onPause() {
-        saveMute();
-        super.onPause();
-    }
-    @Override
-    public void onAttach(Activity activity) {
-        dbHelper = new MutesDbHelper(getActivity());
-        super.onAttach(activity);
-    }
-    private void saveMute() {
-        muteRegistrar.deregister(item);
-        syncToMute(item);
-        muteRegistrar.register(item);
-        dbHelper.updateMute(item);
-    }
-
-    private void syncToMute(Mute item) {
+    public void syncToMute(Mute item) {
         item.chronoCondition.timeSpan.start.hour = startPicker.getCurrentHour();
         item.chronoCondition.timeSpan.start.minutes = startPicker.getCurrentMinute();
         item.chronoCondition.timeSpan.stop.hour = stopPicker.getCurrentHour();
@@ -98,7 +72,7 @@ public class MuteChronoFragment extends Fragment {
             }
         }
     }
-    private void syncFromMute(Mute item) {
+    public void syncFromMute(Mute item) {
         startPicker.setCurrentHour(item.chronoCondition.timeSpan.start.hour);
         startPicker.setCurrentMinute(item.chronoCondition.timeSpan.start.minutes);
         stopPicker.setCurrentHour(item.chronoCondition.timeSpan.stop.hour);

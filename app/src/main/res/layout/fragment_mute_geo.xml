@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:layout_height="wrap_content"
-        android:text="Title"
+        android:text="Location Name"
         android:id="@+id/titleLabel" />
     <EditText
         android:layout_width="match_parent"

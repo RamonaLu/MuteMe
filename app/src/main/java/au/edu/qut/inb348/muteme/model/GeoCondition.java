@@ -41,4 +41,15 @@ public class GeoCondition {
 
 
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof GeoCondition)){
+            return false;
+        }
+        else {
+            GeoCondition otherGeo = (GeoCondition) other;
+            return otherGeo.radiusMetres == radiusMetres && otherGeo.latitude == latitude && otherGeo.longitude == longitude;
+        }
+    }
 }

@@ -22,10 +22,7 @@ import au.edu.qut.inb348.muteme.model.Mute;
 
 public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapReadyListener {
 
-    private Mute item;
-    private MutesDbHelper dbHelper;
-    private MuteRegistrar muteRegistrar;
-
+    Mute mute;
     EditText titleEdit;
     EditText latitudeEdit;
     EditText longitudeEdit;
@@ -39,10 +36,6 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
         @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        muteRegistrar = new MuteRegistrar(getActivity());
-        if (getArguments().containsKey(MuteDetailActivity.ARG_ITEM_ID)) {
-            item = dbHelper.getMute(getArguments().getLong(MuteDetailActivity.ARG_ITEM_ID));
-        }
     }
 
     @Override
@@ -59,18 +52,12 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
                 .replace(R.id.mute_map_container, mapFragment)
                 .commit();
         locationHelper = new LocationHelper(getActivity());
-
-        if (item != null) {
-            syncFromMute(item);
+        if (mute != null) {
+            syncFromMute(mute);
         }
         return rootView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        dbHelper = new MutesDbHelper(getActivity());
-        super.onAttach(activity);
-    }
 
     @Override
     public void onMapReady() {
@@ -100,20 +87,7 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
         }
     }
 
-    @Override
-    public void onPause() {
-        saveMute();
-        super.onPause();
-    }
-
-    private void saveMute() {
-        muteRegistrar.deregister(item);
-        syncToMute(item);
-        muteRegistrar.register(item);
-        dbHelper.updateMute(item);
-    }
-
-    private void syncFromMute(Mute item) {
+    public void syncFromMute(Mute item) {
 
         titleEdit.setText(item.title);
         latitudeEdit.setText(String.valueOf(item.geoCondition.latitude));
@@ -121,7 +95,7 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
         radiusEdit.setText(String.valueOf(item.geoCondition.radiusMetres));
     }
 
-    private void syncToMute(Mute item) {
+    public void syncToMute(Mute item) {
         item.title = titleEdit.getText().toString();
         item.geoCondition.latitude = Double.parseDouble(latitudeEdit.getText().toString());
         item.geoCondition.longitude = Double.parseDouble(longitudeEdit.getText().toString());

@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.zip.Inflater;
 
 import au.edu.qut.inb348.muteme.model.ChronoCondition;
+import au.edu.qut.inb348.muteme.model.GeoCondition;
 import au.edu.qut.inb348.muteme.model.Mute;
 
 public class MutesAdapter extends ArrayAdapter<Mute>{
@@ -35,7 +36,16 @@ public class MutesAdapter extends ArrayAdapter<Mute>{
 
         TextView line1 = (TextView)(view.findViewById(android.R.id.text1));
         Mute mute = mutes.get(position);
-        line1.setText(mute.title);
+        String muteHeading;
+        if (mute.geoCondition.equals(GeoCondition.EVERYWHERE)) {
+            muteHeading = mute.chronoCondition.toString();
+        }else if (mute.chronoCondition.equals(ChronoCondition.ALWAYS)) {
+            muteHeading = mute.title;
+        }else {
+            muteHeading = mute.title +" "+mute.chronoCondition.toString();
+        }
+        line1.setText(muteHeading);
+
 
         return view;
     }

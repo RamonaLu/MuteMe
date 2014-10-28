@@ -10,4 +10,19 @@ public class TimeSpan {
 		this.stop = stop;
 	}
 
+    @Override
+    public String toString(){
+        return start.toString() + " - " + stop.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof TimeSpan)){
+            return false;
+        }
+        else {
+            TimeSpan otherSpan = (TimeSpan) other;
+            return otherSpan.start.equals(start) && otherSpan.stop.equals(stop);
+        }
+    }
 }

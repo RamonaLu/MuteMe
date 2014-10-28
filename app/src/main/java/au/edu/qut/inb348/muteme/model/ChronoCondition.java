@@ -27,4 +27,17 @@ public class ChronoCondition {
         }
         return timeSpan.toString() + " " + daysOfWeekBuilder.toString();
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null || !(other instanceof ChronoCondition)){
+            return false;
+        }
+        else {
+            ChronoCondition otherChrono = (ChronoCondition) other;
+            return otherChrono.timeSpan.equals(timeSpan)
+                    && otherChrono.daysOfWeek.containsAll(daysOfWeek)
+                    && daysOfWeek.containsAll(otherChrono.daysOfWeek);
+        }
+    }
 }
