@@ -37,9 +37,9 @@ public class MutesAdapter extends ArrayAdapter<Mute>{
         TextView line1 = (TextView)(view.findViewById(android.R.id.text1));
         Mute mute = mutes.get(position);
         String muteHeading;
-        if (mute.geoCondition.equals(GeoCondition.EVERYWHERE)) {
+        if (mute.geoCondition.equals(GeoCondition.EVERYWHERE) && !mute.chronoCondition.equals(ChronoCondition.ALWAYS)) {
             muteHeading = mute.chronoCondition.toString();
-        }else if (mute.chronoCondition.equals(ChronoCondition.ALWAYS)) {
+        } else if (mute.chronoCondition.equals(ChronoCondition.ALWAYS) && !mute.geoCondition.equals(GeoCondition.EVERYWHERE)) {
             muteHeading = mute.title;
         }else {
             muteHeading = mute.title +" "+mute.chronoCondition.toString();
