@@ -14,7 +14,7 @@ public class TimeOfDay {
 
     @Override
     public String toString(){
-        return hour+":"+minutes;
+        return String.format("%d:%02d", hour, minutes);
     }
 
     @Override
