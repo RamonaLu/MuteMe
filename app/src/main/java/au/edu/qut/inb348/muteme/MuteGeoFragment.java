@@ -71,7 +71,7 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
             muteMap.setPadding(5,5,5,5);
 
             LatLng mapLocation = null;
-            if (mute.geoCondition == GeoCondition.EVERYWHERE){
+            if (mute.geoCondition.equals(GeoCondition.EVERYWHERE)){
                 Location mostRecentLastKnownLocation = locationHelper.getMostRecentLastKnownLocation();
                 if (mostRecentLastKnownLocation != null) {
                     mapLocation = new LatLng(mostRecentLastKnownLocation.getLatitude(), mostRecentLastKnownLocation.getLongitude());
