@@ -18,7 +18,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import au.edu.qut.inb348.muteme.model.GeoCondition;
 import au.edu.qut.inb348.muteme.model.Mute;
 
-
+/*
+    Written by Chong Lu.
+ */
 public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapReadyListener {
 
     Mute mute;

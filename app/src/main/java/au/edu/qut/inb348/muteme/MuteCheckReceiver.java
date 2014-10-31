@@ -15,6 +15,9 @@ import au.edu.qut.inb348.muteme.model.DayOfWeek;
 import au.edu.qut.inb348.muteme.model.GeoCondition;
 import au.edu.qut.inb348.muteme.model.Mute;
 
+/*
+    Written by Chong Lu.
+ */
 public class MuteCheckReceiver extends BroadcastReceiver{
 
     AudioManager audioManager;

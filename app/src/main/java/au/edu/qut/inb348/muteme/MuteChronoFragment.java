@@ -1,23 +1,19 @@
 package au.edu.qut.inb348.muteme;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
-
 import java.util.HashMap;
-
-import au.edu.qut.inb348.muteme.data.MutesDbHelper;
 import au.edu.qut.inb348.muteme.model.DayOfWeek;
 import au.edu.qut.inb348.muteme.model.Mute;
 
+/*
+    Written by Chong Lu.
+ */
 public class MuteChronoFragment extends Fragment {
 
     private HashMap<DayOfWeek, Integer> toggleDayMap;

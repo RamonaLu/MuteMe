@@ -1,9 +1,8 @@
 package au.edu.qut.inb348.muteme.model;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
-
+/*
+    Written by Chong Lu.
+ */
 public class TimeOfDay {
 	public int hour;
 	public int minutes;

@@ -17,6 +17,9 @@ import java.util.List;
 import au.edu.qut.inb348.muteme.data.MutesDbHelper;
 import au.edu.qut.inb348.muteme.model.Mute;
 
+/*
+    Written by Chong Lu.
+ */
 public class MuteListFragment extends ListFragment {
 
     /**
@@ -152,18 +155,6 @@ public class MuteListFragment extends ListFragment {
         getActivity().getMenuInflater().inflate(R.menu.mute_contextual_actions, menu);
     }
 
-    /**
-     * Turns on activate-on-click mode. When this mode is on, list items will be
-     * given the 'activated' state when touched.
-     */
-    public void setActivateOnItemClick(boolean activateOnItemClick) {
-        // When setting CHOICE_MODE_SINGLE, ListView will automatically
-        // give items the 'activated' state when touched.
-        getListView().setChoiceMode(activateOnItemClick
-                ? ListView.CHOICE_MODE_SINGLE
-                : ListView.CHOICE_MODE_NONE);
-    }
-
     private void setActivatedPosition(int position) {
         if (position == ListView.INVALID_POSITION) {
             getListView().setItemChecked(mActivatedPosition, false);
@@ -172,7 +163,6 @@ public class MuteListFragment extends ListFragment {
         }
 
         mActivatedPosition = position;
-
     }
 
     @Override

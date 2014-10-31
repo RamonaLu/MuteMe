@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.SupportMapFragment;
 
-
+/*
+    Written by Chong Lu.
+ */
 public class MuteMapFragment extends SupportMapFragment {
 
     @Override

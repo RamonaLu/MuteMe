@@ -1,4 +1,8 @@
 package au.edu.qut.inb348.muteme.model;
+
+/*
+    Written by Chong Lu.
+ */
 public class Mute {
     public long id;
 	public GeoCondition geoCondition;

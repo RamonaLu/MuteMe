@@ -12,6 +12,9 @@ import au.edu.qut.inb348.muteme.model.Mute;
 import au.edu.qut.inb348.muteme.model.TimeOfDay;
 import au.edu.qut.inb348.muteme.model.TimeSpan;
 
+/*
+    Written by Chong Lu.
+ */
 public class MuteRegistrar  {
     LocationManager locationManager;
     AlarmManager alarmManager;

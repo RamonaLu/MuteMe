@@ -5,6 +5,8 @@ import android.provider.BaseColumns;
 /*
     All the constants for working with the database (table and column names, etc) are defined in
     this class.
+
+    Written by Chong Lu.
  */
 public final class MutesContract {
     public static final String DATABASE_NAME = "muteme";

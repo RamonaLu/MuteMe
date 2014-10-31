@@ -3,6 +3,9 @@ package au.edu.qut.inb348.muteme.model;
 import android.location.Location;
 import android.os.SystemClock;
 
+/*
+    Written by Chong Lu.
+ */
 public class GeoCondition {
 
     public static final GeoCondition EVERYWHERE = new GeoCondition(-1, -1, 100);

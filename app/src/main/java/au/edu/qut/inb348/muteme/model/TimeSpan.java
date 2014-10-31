@@ -1,5 +1,8 @@
 package au.edu.qut.inb348.muteme.model;
 
+/*
+    Written by Chong Lu.
+ */
 public class TimeSpan {
 	public static final TimeSpan ALL_DAY = new TimeSpan(new TimeOfDay(0,0), new TimeOfDay(0,0));
 

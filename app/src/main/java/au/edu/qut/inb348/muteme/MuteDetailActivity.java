@@ -15,7 +15,9 @@ import android.view.MenuItem;
 import au.edu.qut.inb348.muteme.data.MutesDbHelper;
 import au.edu.qut.inb348.muteme.model.Mute;
 
-
+/*
+    Written by Chong Lu.
+ */
 public class MuteDetailActivity extends FragmentActivity  {
     /**
      * The fragment argument representing the item ID that this fragment
@@ -60,6 +62,7 @@ public class MuteDetailActivity extends FragmentActivity  {
         }
 
     }
+
 
     @Override
     protected void onPause() {

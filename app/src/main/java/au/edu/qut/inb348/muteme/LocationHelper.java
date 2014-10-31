@@ -4,12 +4,16 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
+/*
+    Written by Chong Lu.
+ */
 public class LocationHelper {
     LocationManager locationManager;
     public LocationHelper(Context context){
         locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
     }
+
     public Location getMostRecentLastKnownLocation() {
 
         Location[] lastKnownLocations = new Location[] {

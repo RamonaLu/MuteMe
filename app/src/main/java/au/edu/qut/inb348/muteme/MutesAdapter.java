@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.TwoLineListItem;
-
 import java.util.List;
-import java.util.zip.Inflater;
 
 import au.edu.qut.inb348.muteme.model.ChronoCondition;
 import au.edu.qut.inb348.muteme.model.GeoCondition;
 import au.edu.qut.inb348.muteme.model.Mute;
 
+/*
+    Written by Chong Lu.
+ */
 public class MutesAdapter extends ArrayAdapter<Mute>{
 
     int rowLayout;
@@ -36,6 +36,13 @@ public class MutesAdapter extends ArrayAdapter<Mute>{
 
         TextView line1 = (TextView)(view.findViewById(android.R.id.text1));
         Mute mute = mutes.get(position);
+
+        /*
+            Logic for muteHeading:
+            Show time if location hasn't changed but time has
+            Show location if time hasn't changed but location has
+            Show both time and location otherwise
+         */
         String muteHeading;
         if (mute.geoCondition.equals(GeoCondition.EVERYWHERE) && !mute.chronoCondition.equals(ChronoCondition.ALWAYS)) {
             muteHeading = mute.chronoCondition.toString();

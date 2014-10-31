@@ -4,17 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-
 import au.edu.qut.inb348.muteme.data.MutesDbHelper;
-import au.edu.qut.inb348.muteme.model.ChronoCondition;
-import au.edu.qut.inb348.muteme.model.GeoCondition;
-import au.edu.qut.inb348.muteme.model.Mute;
-import au.edu.qut.inb348.muteme.model.TimeOfDay;
-import au.edu.qut.inb348.muteme.model.TimeSpan;
 
-
+/*
+    Written by Chong Lu.
+ */
 public class MuteListActivity extends Activity
         implements MuteListFragment.Callbacks {
 

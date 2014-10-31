@@ -4,7 +4,9 @@ package au.edu.qut.inb348.muteme.model;
 import java.util.EnumSet;
 
 
-
+/*
+    Written by Chong Lu.
+ */
 public class ChronoCondition {
     public static final ChronoCondition ALWAYS = new ChronoCondition(TimeSpan.ALL_DAY, EnumSet.allOf(DayOfWeek.class));
 
