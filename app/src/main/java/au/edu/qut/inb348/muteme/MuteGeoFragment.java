@@ -1,8 +1,5 @@
 package au.edu.qut.inb348.muteme;
 
-
-
-import android.app.Activity;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,7 +15,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import au.edu.qut.inb348.muteme.data.MutesDbHelper;
 import au.edu.qut.inb348.muteme.model.GeoCondition;
 import au.edu.qut.inb348.muteme.model.Mute;
 
@@ -33,10 +29,12 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
     View rootView;
     LocationHelper locationHelper;
     MuteMapFragment mapFragment;
+    GoogleMap muteMap;
+
     public MuteGeoFragment() {
     }
 
-        @Override
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -61,26 +59,14 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
         return rootView;
     }
 
-     GoogleMap muteMap;
     @Override
     public void onMapReady() {
         muteMap = mapFragment.getMap();
 
-
         if (muteMap != null) {
             muteMap.setPadding(5,5,5,5);
 
-            LatLng mapLocation = null;
-            if (mute.geoCondition.equals(GeoCondition.EVERYWHERE)){
-                Location mostRecentLastKnownLocation = locationHelper.getMostRecentLastKnownLocation();
-                if (mostRecentLastKnownLocation != null) {
-                    mapLocation = new LatLng(mostRecentLastKnownLocation.getLatitude(), mostRecentLastKnownLocation.getLongitude());
-                }
-            }
-            else {
-                mapLocation = new LatLng(mute.geoCondition.latitude, mute.geoCondition.longitude);
-            }
-
+            LatLng mapLocation = determineMapLocation();
             if (mapLocation != null) {
                 changeLocationTo(mapLocation);
                 CameraUpdate cameraAtCurrentLocation =
@@ -99,6 +85,21 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
             }
         }
     }
+
+    private LatLng determineMapLocation() {
+        LatLng mapLocation = null;
+        if (mute.geoCondition.equals(GeoCondition.EVERYWHERE)){
+            Location mostRecentLastKnownLocation = locationHelper.getMostRecentLastKnownLocation();
+            if (mostRecentLastKnownLocation != null) {
+                mapLocation = new LatLng(mostRecentLastKnownLocation.getLatitude(), mostRecentLastKnownLocation.getLongitude());
+            }
+        }
+        else {
+            mapLocation = new LatLng(mute.geoCondition.latitude, mute.geoCondition.longitude);
+        }
+        return mapLocation;
+    }
+
     Marker locationMarker;
 
     private void changeLocationTo(LatLng latLng) {
@@ -112,7 +113,6 @@ public class MuteGeoFragment extends Fragment implements MuteMapFragment.OnMapRe
     }
 
     public void syncFromMute(Mute item) {
-
         titleEdit.setText(item.title);
         latitudeEdit.setText(String.valueOf(item.geoCondition.latitude));
         longitudeEdit.setText(String.valueOf(item.geoCondition.longitude));

@@ -20,6 +20,13 @@ public class MuteCheckReceiver extends BroadcastReceiver{
     AudioManager audioManager;
     LocationHelper locationHelper;
     public static final String MUTE_ID="MUTE_ID";
+
+
+    /*
+        Receives intent indicating one of the conditions of a mute has either occurred or is no
+        longer occurring. The mute ID is provided as an extra named MUTE_ID.
+        The conditions of the mute are then checked and the phone is muted as required.
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         locationHelper = new LocationHelper(context);

@@ -1,12 +1,12 @@
 package au.edu.qut.inb348.muteme.data;
 
-import android.content.ContentResolver;
-import android.net.Uri;
 import android.provider.BaseColumns;
 
+/*
+    All the constants for working with the database (table and column names, etc) are defined in
+    this class.
+ */
 public final class MutesContract {
-    public static final String AUTHORITY = "au.edu.qut.inb348.muteme.data.MutesProvider";
-    public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
     public static final String DATABASE_NAME = "muteme";
     public static final int DATABASE_VERSION = 3;
 
@@ -18,11 +18,7 @@ public final class MutesContract {
             return "SELECT * FROM " + TABLE_NAME + " WHERE " + _ID + " =  " + id ;
         }
 
-        protected static final String MIME_TYPE = "vnd.qut.inb348.muteme.model.mute";
         public static final String TABLE_NAME = "mute";
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(MutesContract.CONTENT_URI,TABLE_NAME);
-        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/"+MIME_TYPE;
-        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE +"/"+MIME_TYPE;
         public static final String _TITLE = "TITLE";
         public static final String _CHRONO_START_HOUR = "CHRONO_START_HOUR";
         public static final String _CHRONO_START_MINUTES = "CHRONO_START_MINUTES" ;
